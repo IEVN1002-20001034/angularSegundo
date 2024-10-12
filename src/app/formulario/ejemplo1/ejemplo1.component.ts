@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
-interface Usuarios{
+interface Usuaarios{
   nombre:string;
-  edad: number;
+  edad:number;
   email:string;
 }
 
@@ -12,27 +12,60 @@ interface Usuarios{
   standalone: true,
   imports: [ReactiveFormsModule],
   templateUrl: './ejemplo1.component.html',
-  styleUrl: './ejemplo1.component.css'
+  // template: `
+  //   <p>
+  //     ejemplo1 works!
+  //   </p>
+  // `,
+  styles: ``
 })
 export class Ejemplo1Component implements OnInit{
+  formGroup!:FormGroup;
 
-  formGroup!: FormGroup;
+  materia='pwa'
+  tem=''
+
+  alumnos:Usuaarios={
+    nombre:'',
+    edad:0,
+    email:''
+  }
 
   constructor(private fb:FormBuilder){}
 
   ngOnInit(): void {
     this.formGroup=this.initForm();
   }
-
   initForm():FormGroup{
     return this.fb.group({
       nombre:[''],
       edad:[''],
-      email:['']
+      email:[''],
     })
   }
+  onSubmit():void{
+    const{nombre, edad, email}=this.formGroup.value; /*desestructuracion de valores */
+    this.alumnos.nombre=nombre;
+    this.alumnos.edad=edad;
+    this.alumnos.email=email;
 
-  onSumit():void{
-    console.log(this.formGroup.value)
+    let alumnosJSON=JSON.stringify(this.alumnos)
+
+    console.log(this.formGroup.value);
+
+    localStorage.setItem('materia',this.materia);
+    localStorage.setItem('alumno',alumnosJSON);
   }
+
+  subImprimir():void{
+    this.tem=localStorage.getItem('materia')!
+
+    const alumnoGuardado = localStorage.getItem('alumno')
+    if(alumnoGuardado){
+      const alumno:Usuaarios=JSON.parse(alumnoGuardado)
+    }
+    /*console.log(this.alumnos);*/
+  }
+
 }
+
