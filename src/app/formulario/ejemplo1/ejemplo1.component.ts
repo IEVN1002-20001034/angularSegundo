@@ -19,7 +19,7 @@ interface Usuaarios{
   // `,
   styles: ``
 })
-export class Ejemplo1Component implements OnInit{
+export default class Ejemplo1Component implements OnInit{
   formGroup!:FormGroup;
 
   materia='pwa'
